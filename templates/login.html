@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <title> Log In Page </title>
+    <body bgcolor="#E6E6FA">
+        <center>
+            <legend> Login Screen</legend>
+            <fieldset>
+                <form action="" method="POST">     
+                    {{ form.hidden_tag() }}     
+                    <div style = font-size:20px; font-weight:bold; margin-left:150px>
+                        {{form.username.label}}
+                        {{form.username}}
+                    <br>
+                        {{form.password.label}}
+                        {{form.password}}
+                    <br>
+                        {{form.submit}}
+                    </div> 
+                </form>  
+            </fieldset>  
+        </center>
+    </body>
+</html>
