@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    body{
+        font-family: "Helvetica Neue", Helvetica, san-serif;
+    }
+    .sidenav{
+        height: 100%;
+        width: 200px;
+        position: fixed;
+        z_index: 1;
+        top: 0;
+        left: 0;
+        background-color: #000099;
+        overflow-x: hidden;
+        padding-top: 20px;     
+    }   
+    .sidenav a{
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #ffffff;
+        display: block;
+    }
+    .sidenav a:hover{
+        color: #818181;
+    }
+    .main{
+        margin-left: 200px;
+        font-size: 28px;
+        padding: 10px 10px;
+    }
+    @media screen and (max-height: 450px){
+        .sidenav {padding-top: 15px;}
+        .sidenav a {font-size;}
+    }
+</style>
+</head>
+
+<body>
+    <div class="sidenav">
+        <a href = "test.html"> View Contact Information </a>
+        <a href = "test.html"> View Class Schedule </a>
+    </div>
+    <div class="main" >
+    {% block content %} {% endblock %}
+</body>    
+    
+    
+    
+</html>
