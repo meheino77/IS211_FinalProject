@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <p>
+        Entered View Contact: {{sess}}
+        Logged In: {{logged_in}}
+    </p>
+    <center>
+       <div>
+       <ul>
+          <li> Name:{{name}} </li>
+          <li> Address:{{address}} </li>
+           <li> City: {{city}} </li>
+           <li> State:{{state}} </li>
+        </ul>
+        <div>
+    </center>
+{% endblock %}

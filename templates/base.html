@@ -28,7 +28,7 @@
     }
     .main{
         margin-left: 200px;
-        font-size: 28px;
+        font-size: 20px;
         padding: 10px 10px;
     }
     @media screen and (max-height: 450px){
@@ -40,11 +40,22 @@
 
 <body>
     <div class="sidenav">
-        <a href = "test.html"> View Contact Information </a>
-        <a href = "test.html"> View Class Schedule </a>
+        <a href = "{{url_for('main_page')}}"> Home Page </a>
+        <a href = "{{url_for('view_contact')}}"> View Contact Information </a>
+        <a href = "{{url_for('log_out')}}">Log Out </a>
     </div>
     <div class="main" >
-    {% block content %} {% endblock %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li> {{message}} </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% block content %} 
+    {% endblock %}
 </body>    
     
     
