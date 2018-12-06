@@ -17,4 +17,14 @@ class LoginForm(FlaskForm):
     #password = StringField('Password', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Log In')
+
+class Update_Info(FlaskForm):
+
+    address = StringField('Address')
+    city = StringField('City')
+    state = StringField('State')
+    phone = StringField('Phone')
+    submit = SubmitField('Submit Changes')
     
+    
+ 
