@@ -16,7 +16,7 @@ from config import db
 
 def init_db():
     
-    from models import User, Contact_Info
+    from models import User, Contact_Info, Registered_Courses, Course_Info
     
     db.create_all()
     db.session.commit()
@@ -50,6 +50,18 @@ def insert_user(email, pwrd):
     db.session.commit()
     db.session.close()
     
+def insert_registered():
+    
+    from models import Registered_Courses
+     
+    db.session.add(Registered_Courses(1,1))
+    db.session.add(Registered_Courses(1,3))
+    db.session.add(Registered_Courses(2,2))
+    db.session.add(Registered_Courses(2,4))
+    
+    db.session.commit()
+    db.session.close()
+
     
 def insert_contact():
     
@@ -66,6 +78,28 @@ def insert_contact():
     
     db.session.commit()
     db.session.close()
+    
+def insert_course_info():
+    
+    from models import Course_Info
+    
+    course1 = Course_Info("MATH", "120", "Algebra")
+    course2 = Course_Info("CS", "211", "Programming 2")
+    course3 = Course_Info("HIST", "211", "Western Civilization")
+    course4 = Course_Info("ART", "100", "Art History")
+    
+    
+    db.session.add(course1)
+    db.session.add(course2)
+    db.session.add(course3)
+    db.session.add(course4)
+    
+    
+    db.session.commit()
+    db.session.close()
+    
+    
+    
     
     
     

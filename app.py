@@ -9,9 +9,9 @@ Created on Tue Dec  4 00:20:06 2018
 from flask import render_template, request, flash, redirect, url_for, session
 
 from config import app
-from db_setup import init_db, insert_user, insert_users, insert_contact
+from db_setup import init_db,insert_users, insert_contact, insert_course_info, insert_registered
 from forms import LoginForm, Update_Info
-from models import User, Contact_Info
+from models import User, Contact_Info, Registered_Courses, Course_Info
 from config import db
 
 
@@ -27,7 +27,8 @@ def index():
     else: 
         if form.validate_on_submit():
             
-            user= User.query.filter_by(email=form.username.data, password=form.password.data).first()
+            user= User.query.filter_by(email=form.username.data, 
+                                       password=form.password.data).first()
            
             
             if user is not None:
@@ -54,6 +55,7 @@ def log_out():
     session.pop('user_id', None)
     session.pop('name', None)
     
+    flash("You are now logged out.")
     return redirect(url_for('index'))
     
 
@@ -108,16 +110,28 @@ def view_contact():
        return redirect(url_for('view_contact'))
    else:
        return "There has been an error!"
+
+@app.route('/view_schedule', methods=['GET','POST'])
+def view_schedule():
+    
+    ses = session['user_id']
+    
+    test1 =  db.session.query(Registered_Courses.id, Registered_Courses.course_id, Course_Info.dept, Course_Info.courseNum, Course_Info.courseTitle).join(Course_Info, Registered_Courses.course_id == Course_Info.id).filter(Registered_Courses.user_id == ses)
+    
+    if request.method == "GET":
         
-        
-        
+        count = test1.count()
+        return "ENTERED GET" + str(ses) + str(count)
+    else:
+        return "Entered POST:"
        
 def intialize_database():
     
     init_db()
     insert_users()
     insert_contact()
-   
+    insert_course_info()
+    insert_registered()
     # insert_user("gpheino@msn.com", "simple")
     
 if __name__ == '__main__':

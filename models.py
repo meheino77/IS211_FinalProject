@@ -48,3 +48,34 @@ class Contact_Info(db.Model):
         self.city = cty
         self.state = stte
         self.phone = phne
+        
+        
+class Registered_Courses(db.Model):
+    
+    __tablename__ = 'registered'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey("courses.id"), 
+                          nullable=False)
+    
+    def __init__(self, uid, cuid):
+        
+        self.user_id = uid
+        self.course_id = cuid
+
+    
+class Course_Info(db.Model):
+    
+    __tablename__ = 'courses'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    dept = db.Column(db.String)
+    courseNum = db.Column(db.String)
+    courseTitle = db.Column(db.String)
+    
+    def __init__(self, dpt, crn, ctitle):
+        
+        self.dept = dpt
+        self.courseNum = crn
+        self.courseTitle = ctitle

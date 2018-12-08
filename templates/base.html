@@ -42,7 +42,9 @@
     <div class="sidenav">
         <a href = "{{url_for('main_page')}}"> Home Page </a>
         <a href = "{{url_for('view_contact')}}"> View Contact Information </a>
-        <a href = "{{url_for('log_out')}}">Log Out </a>
+        <a href = "{{url_for('view_schedule')}}"> View Schedule </a>
+        <a href = "{{url_for('log_out')}}"> Log Out </a>
+        
     </div>
     <div class="main" >
     {% with messages = get_flashed_messages() %}
