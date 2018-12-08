@@ -116,15 +116,26 @@ def view_schedule():
     
     ses = session['user_id']
     
-    test1 =  db.session.query(Registered_Courses.id, Registered_Courses.course_id, Course_Info.dept, Course_Info.courseNum, Course_Info.courseTitle).join(Course_Info, Registered_Courses.course_id == Course_Info.id).filter(Registered_Courses.user_id == ses)
+    classes =  db.session.query(Registered_Courses.id, Registered_Courses.course_id, Course_Info.dept, Course_Info.courseNum, Course_Info.courseTitle).join(Course_Info, Registered_Courses.course_id == Course_Info.id).filter(Registered_Courses.user_id == ses)
     
     if request.method == "GET":
-        
+        """
         count = test1.count()
         return "ENTERED GET" + str(ses) + str(count)
+        """
+        return render_template ('view_schedule.html', classes=classes)
     else:
-        return "Entered POST:"
-       
+        
+        id_num = request.form.get('delete_class')
+    
+        #return "Entered POST:" + str(id_num)
+    
+        Registered_Courses.query.filter(Registered_Courses.id == id_num).delete()
+        db.session.commit() 
+        
+        return redirect(url_for('view_schedule'))
+        
+        
 def intialize_database():
     
     init_db()
