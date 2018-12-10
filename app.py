@@ -78,14 +78,8 @@ def view_contact():
    contact = Contact_Info.query.filter_by(user_id  = int(ses)).first()
    
    if request.method == "GET":
-       """
-       ses = str(session['user_id']) 
-       yorn = session['logged_in']
-       nme = session['name']
        
-       contact = Contact_Info.query.filter_by(user_id  = int(ses)).first()
-       """
-       
+   
        return render_template ('view_contact.html', sess=ses, logged_in = yorn,
                                loginname = nme, name= nme, 
                                address=contact.address,
@@ -126,13 +120,13 @@ def view_schedule():
         return render_template ('view_schedule.html', classes=classes)
     else:
         
-        id_num = request.form.get('delete_class')
-    
-        #return "Entered POST:" + str(id_num)
-    
-        Registered_Courses.query.filter(Registered_Courses.id == id_num).delete()
-        db.session.commit() 
-        
+        if request.form.get('delete_all_classes'):
+            db.session.query(Registered_Courses).filter(Registered_Courses.user_id == ses).delete()
+            db.session.commit()
+        else:
+            id_num = request.form.get('delete_class')
+            Registered_Courses.query.filter(Registered_Courses.id == id_num).delete()
+            db.session.commit() 
         return redirect(url_for('view_schedule'))
         
         

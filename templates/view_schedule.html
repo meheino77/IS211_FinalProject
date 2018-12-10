@@ -1,11 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<style>
+#schedule {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#schedule td, #schedule th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+#schedule tr:nth-child(even){background-color: #ffe6cc;}
+
+#schdeule tr:hover {background-color: #ddd;}
+
+#schedule th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #000099;
+  color: white;
+}
+</style>
+</head>
+
 <body>
 <p>Your schedule is viewed below.  Click on Delete Class to drop a class from your scedule.</p>
     <center>
         <form action={{ url_for('view_schedule') }} method="post">
-        <table bgcolor="White" style="width: 40%;" border="3" cellpadding="13">
+        <table id="schedule">
             <thead>
                 <th>Registration ID</th>
                 <th>Course ID</th>
@@ -22,11 +50,12 @@
                     <td>{{class.dept}}</td>
                     <td>{{class.courseNum}}</td>
                     <td>{{class.courseTitle}}</td>
-                <td><button name="delete_class" type="submit" value="{{class.id}}">Delete Class</button></td>
+                <td><button name="delete_class" type="submit" value="{{class.id}}">Drop Class</button></td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        <button name="delete_all_classes" type="submit" value=True>Drop All Classes</button>
         </form>
     </center>
 </body>
