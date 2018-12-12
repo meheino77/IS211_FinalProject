@@ -6,6 +6,8 @@ Created on Tue Dec  4 00:15:50 2018
 @author: ntcrwlr77
 """
 
+""" Configuration file for the application """
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
