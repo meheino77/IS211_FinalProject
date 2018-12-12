@@ -9,10 +9,11 @@ Created on Tue Dec  4 00:20:06 2018
 from flask import render_template, request, flash, redirect, url_for, session
 
 from config import app
-from db_setup import init_db,insert_users, insert_contact, insert_course_info, insert_registered
+from db_setup import init_db,insert_users, insert_contact, insert_course_info, insert_registered, insert_available
 from forms import LoginForm, Update_Info
-from models import User, Contact_Info, Registered_Courses, Course_Info
+from models import User, Contact_Info, Registered_Courses, Course_Info, Available_Courses
 from config import db
+from sqlalchemy_utils import database_exists
 
 
 
@@ -65,6 +66,38 @@ def main_page():
     flash("You are logged in! ")
     return render_template('dashboard.html')
 
+
+@app.route('/register_classes', methods=['GET','POST'])
+def register_classes():
+    
+    departments = ['MATH','CS','ART','HIST']
+    
+    
+    if request.method == "GET":
+        #return "Entered register courses!"
+       return render_template ('Register_Courses.html', departments=departments)
+    elif request.method == "POST":
+        
+        if request.form.get("search_classes") != None:
+            dpt = request.form["department"]
+           
+            classes = db.session.query(Available_Courses.id, Available_Courses.course_id,Course_Info.dept, Course_Info.courseNum, Course_Info.courseTitle).join(Course_Info, Available_Courses.course_id == Course_Info.id).filter(Course_Info.dept == dpt)
+            
+            return render_template ('Register_Courses.html', departments=departments, classes=classes)
+            #cnt = classes.count()
+            #return str(cnt)
+        else:
+            course = request.form["Register_class"]
+            db.session.add(Registered_Courses(session['user_id'], course))
+            db.session.commit()
+            
+            return redirect(url_for('view_schedule'))
+            
+            #return "Inner else" + str(course)
+    else:
+        return "Else"
+       
+        
 @app.route('/view_contact', methods=['GET','POST'])
 def view_contact():
     
@@ -132,11 +165,13 @@ def view_schedule():
         
 def intialize_database():
     
-    init_db()
-    insert_users()
-    insert_contact()
-    insert_course_info()
-    insert_registered()
+    if database_exists("sqlite:///studentadmin.db") is False:
+        init_db()
+        insert_users()
+        insert_contact()
+        insert_course_info()
+        insert_registered()
+        insert_available()
     # insert_user("gpheino@msn.com", "simple")
     
 if __name__ == '__main__':

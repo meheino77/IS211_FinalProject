@@ -87,18 +87,31 @@ def insert_course_info():
     course2 = Course_Info("CS", "211", "Programming 2")
     course3 = Course_Info("HIST", "211", "Western Civilization")
     course4 = Course_Info("ART", "100", "Art History")
+    course5 = Course_Info("CS", "300", "Computer Architecture")
+    course6 = Course_Info("CS", "240", "Logic Design")
     
     
     db.session.add(course1)
     db.session.add(course2)
     db.session.add(course3)
     db.session.add(course4)
+    db.session.add(course5)
+    db.session.add(course6)
     
     
     db.session.commit()
     db.session.close()
     
+def insert_available():
     
+    from models import Available_Courses
+    
+    db.session.add(Available_Courses(4))
+    db.session.add(Available_Courses(5))
+    db.session.add(Available_Courses(6))  
+    
+    db.session.commit()
+    db.session.close()
     
     
     

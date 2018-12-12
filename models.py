@@ -79,3 +79,16 @@ class Course_Info(db.Model):
         self.dept = dpt
         self.courseNum = crn
         self.courseTitle = ctitle
+
+
+class Available_Courses(db.Model):
+    
+    __tablename__ = 'available'
+    
+    id = db.Column(db.Integer, primary_key = True)
+    course_id = db.Column(db.Integer, db.ForeignKey("courses.id"),
+                          nullable=False)
+    
+    def __init__(self, crs_id):
+        
+        self.course_id = crs_id
